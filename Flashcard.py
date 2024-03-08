@@ -2,7 +2,7 @@
 
 import random
 import os
-import keyboard
+#import keyboard
 import argparse
 
 #Program Setup
@@ -35,14 +35,15 @@ outputfile = args.o
 data = import_file(args.InputFile)
 data_file = (args.InputFile)
 
+#if os.path.exists(data_file + ".save") == True:
+#     save_data = open(file_path, 'r')
+
 
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
 
 
-if os.path.exists(data_file + ".save") == True:
-    print("yes")
- 
+
 
 incomplete_cards = []
 
@@ -52,6 +53,7 @@ for line_number, line in enumerate(data):
 #Main program loop
 
 while len(incomplete_cards) > 0:
+    print(incomplete_cards)
     card_number = random.randrange(0,len(incomplete_cards))
     current_line = data[incomplete_cards[card_number]]
     delim_position = current_line.find("$$$")
@@ -59,11 +61,12 @@ while len(incomplete_cards) > 0:
         print("Line " + str(incomplete_cards[card_number] + 1)  + " incompatable")
         incomplete_cards.pop(card_number)
     else:   
+        #The following if statement will output the full card to a file called "outputfile" if the -o flag was given. This allows a second person to follow along who can see the full contents of the flashcard while the primary user only sees one side of it
         if outputfile == True:
             command = 'echo ' + current_line[:delim_position] + " - " + current_line[delim_position+3:].rstrip() + " >> outputfile"
             os.system(command)
 
-        os.system('clear')
+        #os.system('clear')
         print(current_line[:delim_position])
         #print("Hit enter to continue:")
         input()
