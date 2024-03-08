@@ -8,18 +8,35 @@ import argparse
 
 #Program Setup
 
+class flashcard:
+    front = ''
+    back = ''
+    complete = None
 
 def import_file(file_path):
-    try:
-        data = []
-        file_data = open(file_path, 'r')
-        for line in file_data.readlines():
-            data.append(line)
-        return(data)
 
+    data = []
+    try:
+        file_data = open(file_path, 'r')
     except:
         print("Invalid Input File")
         exit(1)
+        
+    for line in file_data.readlines():
+        trans_line = flashcard()
+        delim1 = line.find("$$$")
+        delim2 = line.find(":::")
+        trans_line.front = line[:delim1]
+        trans_line.back = line[delim1 + 3:delim2]
+        if int(line[delim2 + 3:]) == 0:
+            trans_line.complete = False
+        if int(line[delim2 + 3:]) == 1:
+            trans_line.complete = True
+        data.append(trans_line)
+    return(data)
+
+
+
 
 #Parse commandline arguements using argparse
 parser = argparse.ArgumentParser()
@@ -34,16 +51,19 @@ reverse = args.r
 outputfile = args.o
 
 data = import_file(args.InputFile)
-data_file = (args.InputFile)
 
-#if os.path.exists(data_file + ".save") == True:
+for line in data:
+    print(line.front)
+    print(line.back)
+    print(line.complete)
+    print("")
+
 #     save_data = open(file_path, 'r')
-
 
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
 
-
+'''
 
 
 incomplete_cards = []
@@ -76,4 +96,7 @@ while len(incomplete_cards) > 0:
         print("correct? y/n")
         answer = input()
         if answer == 'y':
-            incomplete_cards.pop(card_number)
+            incomplete_cards.pop(card_number) 
+
+'''
+
