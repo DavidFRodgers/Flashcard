@@ -4,6 +4,7 @@ import sys
 import random
 import os
 import keyboard
+import argparse
 
 #Program Setup
 
@@ -20,44 +21,21 @@ def import_file(file_path):
         print("Invalid Input File")
         exit(1)
 
-reverse = False
-outputfile = False
-
-loopint = 0
-
-while loopint < len(sys.argv):
-    print(loopint)
-    loopint = loopint +1
+#Parse commandline arguements using argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("InputFile")
+parser.add_argument("-o", action='store_true', help="create file that shows full cards")
+parser.add_argument("-r", action='store_true', help="reverse flashcards")
+args = parser.parse_args() 
 
 
 
+reverse = args.r 
+outputfile = args.o
 
-if len(sys.argv) > 3:
-    print("Too many arguements")
-    exit(1)
+data = import_file(args.InputFile)
+data_file = (args.InputFile)
 
-elif len(sys.argv) == 1:
-    print("No Input File")
-    exit(1)
-
-elif len(sys.argv) == 2:
-    data = import_file(sys.argv[1])
-    data_file = sys.argv[1]
-
-elif len(sys.argv) == 3:
-    data = import_file(sys.argv[2])
-    data_file = sys.argv[2]
-
-    if sys.argv[1] == '-r':
-        reverse = True
-    elif sys.argv[1] == '-o':
-        outputfile = True
-    elif sys.argv[1] == '-ro':
-        reverse = True
-        outputfile = True
-    else:
-        print("Invalid Arguements")
-        exit(1)
 
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
