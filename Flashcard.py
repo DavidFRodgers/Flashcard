@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import random
 import os
 #import keyboard
