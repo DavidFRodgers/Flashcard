@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-#import sys
 import random
 import os
 import argparse
+from colorama import Fore, Back, Style
 
 #Program Setup
 
@@ -99,7 +99,8 @@ while len(incomplete_cards) > 0:
         command = 'echo ' + current_line.front + " - " + current_line.back + " >> outputfile"
         os.system(command)
 
-    print(current_line.front)
+    print(Fore.BLUE + current_line.front + Style.RESET_ALL)
+
     ctrl_bool = False
     while ctrl_bool == False:
         print("[Hit enter to continue] ", end='')
@@ -107,7 +108,8 @@ while len(incomplete_cards) > 0:
         if answer == "":
             ctrl_bool = True
     os.system('clear')
-    print(current_line.front + " - " + current_line.back )
+
+    print(Fore.BLUE + current_line.front + Style.RESET_ALL + " - " + Fore.YELLOW + current_line.back + Style.RESET_ALL)
     
     ctrl_bool = False
     while ctrl_bool == False:
