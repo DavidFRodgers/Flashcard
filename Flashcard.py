@@ -38,6 +38,8 @@ def import_file(file_path):
 
 
 
+
+
 #Parse commandline arguements using argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("InputFile")
@@ -78,11 +80,11 @@ while len(incomplete_cards) > 0:
 
     os.system('clear')
     print(current_line.front)
-    print("[Hit enter to continue]")
+    print("[Hit enter to continue] ", end='')
     input()
     os.system('clear')
     print(current_line.front + " - " + current_line.back )
-    print("[Correct? y/n]")
+    print("[Correct? y/n] ", end='')
     answer = input()
     if answer == 'y':
         data[incomplete_cards[card_number]].complete = True
