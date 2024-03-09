@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys
+#import sys
 import random
 import os
 import argparse
@@ -39,7 +39,6 @@ def save_file(file_path, save_data):
     os.system("> " + file_path + ".save")
     for line in save_data:
         output_line = line.front + "$$$" + line.back + ":::" + str(int(line.complete))
-        print(output_line)
         os.system("echo '" + output_line + "' >> " + file_path + ".save")
 
     return()
@@ -62,8 +61,6 @@ outputfile = args.o
 data = import_file(args.InputFile)
 
 
-save_file(args.InputFile, data)
-exit()
 
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
@@ -92,17 +89,35 @@ while len(incomplete_cards) > 0:
         os.system(command)
 
     print(current_line.front)
-    print("[Hit enter to continue] ", end='')
-    input()
+    ctrl_bool = False
+    while ctrl_bool == False:
+        print("[Hit enter to continue] ", end='')
+        answer = input()
+        if answer == "":
+            ctrl_bool = True
     os.system('clear')
     print(current_line.front + " - " + current_line.back )
-    print("[Correct? y/n] ", end='')
-    answer = input()
-    if answer == 'y':
-        data[incomplete_cards[card_number]].complete = True
-        incomplete_cards.pop(card_number) 
+    
+    ctrl_bool = False
+    while ctrl_bool == False:
+        print("[Correct? y/n] ", end='')
+        answer = input()
+        match answer:
+            case "y":
+                data[incomplete_cards[card_number]].complete = True
+                incomplete_cards.pop(card_number)
+                ctrl_bool = True
+            case "n":
+                ctrl_bool = True
+            case "save":
+                save_file(args.InputFile, data)
+            case "exit":
+                exit()
+            case other:
+                print("Invalid Command")
+                print("Valid Commands: y, n, save, exit")
+
     os.system('clear')
 
 
-save_file(args.InputFile, data)
 
