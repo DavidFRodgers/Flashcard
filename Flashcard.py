@@ -3,7 +3,6 @@
 import sys
 import random
 import os
-#import keyboard
 import argparse
 
 #Program Setup
@@ -33,9 +32,17 @@ def import_file(file_path):
         if int(line[delim2 + 3:]) == 1:
             trans_line.complete = True
         data.append(trans_line)
+    file_data.close()
     return(data)
 
+def save_file(file_path, save_data):
+    os.system("> " + file_path + ".save")
+    for line in save_data:
+        output_line = line.front + "$$$" + line.back + ":::" + str(int(line.complete))
+        print(output_line)
+        os.system("echo '" + output_line + "' >> " + file_path + ".save")
 
+    return()
 
 
 
@@ -55,6 +62,9 @@ outputfile = args.o
 data = import_file(args.InputFile)
 
 
+save_file(args.InputFile, data)
+exit()
+
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
 
@@ -66,6 +76,9 @@ for line_number, line in enumerate(data):
     if line.complete == False:
         incomplete_cards.append(line_number)
 
+os.system('clear')
+print("Welcome to Flashcard")
+print("")
 
 #Main program loop
 
@@ -78,7 +91,6 @@ while len(incomplete_cards) > 0:
         command = 'echo ' + current_line.front + " - " + current_line.back + " >> outputfile"
         os.system(command)
 
-    os.system('clear')
     print(current_line.front)
     print("[Hit enter to continue] ", end='')
     input()
@@ -89,5 +101,8 @@ while len(incomplete_cards) > 0:
     if answer == 'y':
         data[incomplete_cards[card_number]].complete = True
         incomplete_cards.pop(card_number) 
+    os.system('clear')
 
+
+save_file(args.InputFile, data)
 
