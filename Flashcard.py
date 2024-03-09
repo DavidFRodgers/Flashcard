@@ -36,12 +36,13 @@ def import_file(file_path):
     return(data)
 
 def save_file(file_path, save_data):
-    os.system("> " + file_path + ".save")
+    os.system("> " + file_path)
     for line in save_data:
         output_line = line.front + "$$$" + line.back + ":::" + str(int(line.complete))
-        os.system("echo '" + output_line + "' >> " + file_path + ".save")
+        os.system("echo '" + output_line + "' >> " + file_path)
 
     return()
+
 
 
 
@@ -50,7 +51,8 @@ def save_file(file_path, save_data):
 parser = argparse.ArgumentParser()
 parser.add_argument("InputFile")
 parser.add_argument("-o", action='store_true', help="create file that shows full cards")
-parser.add_argument("-r", action='store_true', help="reverse flashcards")
+parser.add_argument("-r", action='store_true', help="reverse flashcards (non functioning)")
+parser.add_argument("--clear", action='store_true', help="set all flashcards as unfinished")
 args = parser.parse_args() 
 
 
@@ -60,7 +62,16 @@ outputfile = args.o
 
 data = import_file(args.InputFile)
 
+#if the --clear arguement is passed, the following code, to set all Flashcards as unfinished will run, and the program will exit
 
+if args.clear == True:
+    print("Setting All Flashcards as Incomplete")
+    ctrl_int = 0
+    while ctrl_int < len(data):
+        data[ctrl_int].complete = False
+        ctrl_int = ctrl_int + 1
+    save_file(args.InputFile, data)
+    exit()
 
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
@@ -100,7 +111,7 @@ while len(incomplete_cards) > 0:
     
     ctrl_bool = False
     while ctrl_bool == False:
-        print("[Correct? y/n] ", end='')
+        print("[Correct? y/n (save/exit)] ", end='')
         answer = input()
         match answer:
             case "y":
@@ -118,6 +129,8 @@ while len(incomplete_cards) > 0:
                 print("Valid Commands: y, n, save, exit")
 
     os.system('clear')
+
+print("All Flashcards Complete!")
 
 
 
