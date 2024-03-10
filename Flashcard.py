@@ -27,6 +27,7 @@ def import_file(file_path):
         delim2 = line.find(":::")
         trans_line.front = line[:delim1]
         trans_line.back = line[delim1 + 3:delim2]
+        print(line[delim2 + 3:])
         if int(line[delim2 + 3:]) == 0:
             trans_line.complete = False
         if int(line[delim2 + 3:]) == 1:
@@ -36,11 +37,11 @@ def import_file(file_path):
     return(data)
 
 def save_file(file_path, save_data):
-    os.system("> " + file_path)
+    output_file = open(file_path, "w")
     for line in save_data:
-        output_line = line.front + "$$$" + line.back + ":::" + str(int(line.complete))
-        os.system("echo '" + output_line + "' >> " + file_path)
-
+        output_line = line.front + "$$$" + line.back + ":::" + str(int(line.complete))+ "\n"
+        output_file.write(output_line)
+    output_file.close()
     return()
 
 
