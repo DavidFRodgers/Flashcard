@@ -27,7 +27,6 @@ def import_file(file_path):
         delim2 = line.find(":::")
         trans_line.front = line[:delim1]
         trans_line.back = line[delim1 + 3:delim2]
-        print(line[delim2 + 3:])
         if int(line[delim2 + 3:]) == 0:
             trans_line.complete = False
         if int(line[delim2 + 3:]) == 1:
@@ -43,6 +42,26 @@ def save_file(file_path, save_data):
         output_file.write(output_line)
     output_file.close()
     return()
+
+def input_parse(status):
+    ctrl_bool = False
+    while ctrl_bool == False:
+        print("[Correct? y/n (save/exit)] ", end='')
+        answer = input()
+        match answer:
+            case "y":
+                data[incomplete_cards[card_number]].complete = True
+                incomplete_cards.pop(card_number)
+                ctrl_bool = True
+            case "n":
+                ctrl_bool = True
+            case "save":
+                save_file(args.InputFile, data)
+            case "exit":
+                exit()
+            case other:
+                print("Invalid Command")
+                print("Valid Commands: y, n, save, exit")
 
 
 
@@ -111,29 +130,15 @@ while len(incomplete_cards) > 0:
     os.system('clear')
 
     print(Fore.BLUE + current_line.front + Style.RESET_ALL + " - " + Fore.YELLOW + current_line.back + Style.RESET_ALL)
-    
-    ctrl_bool = False
-    while ctrl_bool == False:
-        print("[Correct? y/n (save/exit)] ", end='')
-        answer = input()
-        match answer:
-            case "y":
-                data[incomplete_cards[card_number]].complete = True
-                incomplete_cards.pop(card_number)
-                ctrl_bool = True
-            case "n":
-                ctrl_bool = True
-            case "save":
-                save_file(args.InputFile, data)
-            case "exit":
-                exit()
-            case other:
-                print("Invalid Command")
-                print("Valid Commands: y, n, save, exit")
 
+    input_parse(1)
+    
     os.system('clear')
 
 print("All Flashcards Complete!")
+print("Saving Card Completetion Status")
+save_file(args.InputFile, data)
+
 
 
 
