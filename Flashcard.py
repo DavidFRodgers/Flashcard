@@ -46,19 +46,26 @@ def save_file(file_path, save_data):
 def input_parse(status):
     ctrl_bool = False
     while ctrl_bool == False:
-        print("[Correct? y/n (save/exit)] ", end='')
+        if status == 1:
+            print("[Correct? y/n]  (save/exit)", end='')
+        elif status == 0:
+            print("[Hit enter to continue] (save/exit) ", end='')
         answer = input()
-        match answer:
-            case "y":
+        mod_answer = answer + ":" + str(status)
+        match mod_answer:
+            case "y:1":
                 data[incomplete_cards[card_number]].complete = True
                 incomplete_cards.pop(card_number)
                 ctrl_bool = True
-            case "n":
+            case "n:1":
                 ctrl_bool = True
-            case "save":
+            case "save:0" | "save:1":
+                print("Saving Card Completion Status")
                 save_file(args.InputFile, data)
-            case "exit":
+            case "exit:0" | "exit:1":
                 exit()
+            case ":0":
+                ctrl_bool = True
             case other:
                 print("Invalid Command")
                 print("Valid Commands: y, n, save, exit")
@@ -121,13 +128,17 @@ while len(incomplete_cards) > 0:
 
     print(Fore.BLUE + current_line.front + Style.RESET_ALL)
 
-    ctrl_bool = False
-    while ctrl_bool == False:
-        print("[Hit enter to continue] ", end='')
-        answer = input()
-        if answer == "":
-            ctrl_bool = True
+    input_parse(0)
+
     os.system('clear')
+    
+#    ctrl_bool = False
+#    while ctrl_bool == False:
+#        print("[Hit enter to continue] ", end='')
+#        answer = input()
+#        if answer == "":
+#            ctrl_bool = True
+
 
     print(Fore.BLUE + current_line.front + Style.RESET_ALL + " - " + Fore.YELLOW + current_line.back + Style.RESET_ALL)
 
