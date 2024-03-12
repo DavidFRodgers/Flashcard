@@ -47,9 +47,9 @@ def input_parse(status):
     ctrl_bool = False
     while ctrl_bool == False:
         if status == 1:
-            print("[Correct? y/n]  (save/exit)", end='')
+            print("[Correct? y/n]  (command): ", end='')
         elif status == 0:
-            print("[Hit enter to continue] (save/exit) ", end='')
+            print("[Hit enter to continue] (command): ", end='')
         answer = input()
         mod_answer = answer + ":" + str(status)
         match mod_answer:
@@ -60,15 +60,26 @@ def input_parse(status):
             case "n:1":
                 ctrl_bool = True
             case "save:0" | "save:1":
+                print("")
                 print("Saving Card Completion Status")
+                print("")
                 save_file(args.InputFile, data)
             case "exit:0" | "exit:1":
                 exit()
+            case "stats:0" | "stats:1":
+                print(str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
+            case "help:0" | "help:1":
+                print("")
+                print("Available Commands:")
+                print("     help: See this help")
+                print("     save: Save card completion status to file")
+                print("     exit: Exit the program")
+                print("     stats: View how many cards are complete")
+                print("")
             case ":0":
                 ctrl_bool = True
             case other:
                 print("Invalid Command")
-                print("Valid Commands: y, n, save, exit")
 
 
 
@@ -113,34 +124,36 @@ for line_number, line in enumerate(data):
 
 os.system('clear')
 print("Welcome to Flashcard")
-print("")
+print("Type 'help' for a list of commands")
+#print("")
 
 #Main program loop
 
 while len(incomplete_cards) > 0:
     card_number = random.randrange(0,len(incomplete_cards))
     current_line = data[incomplete_cards[card_number]]
+    print(card_number)
 
     #The following if statement will output the full card to a file called "outputfile" if the -o flag was given. This allows a second person to follow along who can see the full contents of the flashcard while the primary user only sees one side of it
     if outputfile == True:
         command = 'echo ' + current_line.front + " - " + current_line.back + " >> outputfile"
         os.system(command)
 
+    print("")
+    print("Front:")
     print(Fore.BLUE + current_line.front + Style.RESET_ALL)
-
+    print("")
     input_parse(0)
 
     os.system('clear')
     
-#    ctrl_bool = False
-#    while ctrl_bool == False:
-#        print("[Hit enter to continue] ", end='')
-#        answer = input()
-#        if answer == "":
-#            ctrl_bool = True
-
-
-    print(Fore.BLUE + current_line.front + Style.RESET_ALL + " - " + Fore.YELLOW + current_line.back + Style.RESET_ALL)
+    print("")
+    print("Front:")
+    print(Fore.BLUE + current_line.front + Style.RESET_ALL)
+    print("")
+    print("Back:")
+    print(Fore.YELLOW + current_line.back + Style.RESET_ALL)
+    print("")
 
     input_parse(1)
     
