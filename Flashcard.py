@@ -5,7 +5,7 @@ import os
 import argparse
 from colorama import Fore, Back, Style
 
-#Program Setup
+#Program Setup, defs and classes
 
 class flashcard:
     front = ''
@@ -20,18 +20,26 @@ def import_file(file_path):
     except:
         print("Invalid Input File")
         exit(1)
-        
+
+    id_line = 1    
     for line in file_data.readlines():
         trans_line = flashcard()
         delim1 = line.find("$$$")
         delim2 = line.find(":::")
-        trans_line.front = line[:delim1]
-        trans_line.back = line[delim1 + 3:delim2]
-        if int(line[delim2 + 3:]) == 0:
-            trans_line.complete = False
-        if int(line[delim2 + 3:]) == 1:
-            trans_line.complete = True
-        data.append(trans_line)
+        if delim1 == -1:
+            print("No deliminator ($$$) on line " + str(id_line))
+            exit(1)
+        else:
+            trans_line.front = line[:delim1]
+            trans_line.back = line[delim1 + 3:delim2]
+            if delim2 == -1:
+                trans_line.complete = False
+            elif int(line[delim2 + 3:]) == 0:
+                trans_line.complete = False
+            elif int(line[delim2 + 3:]) == 1:
+                trans_line.complete = True
+            data.append(trans_line)
+        id_line = id_line + 1
     file_data.close()
     return(data)
 
