@@ -81,7 +81,11 @@ def input_parse(status):
             case other:
                 print("Invalid Command")
 
-
+def clear_screen():
+    if os.name == "posix":
+        os.system('clear')
+    elif os.name == "nt":
+        os.system('cls')
 
 
 
@@ -122,7 +126,7 @@ for line_number, line in enumerate(data):
     if line.complete == False:
         incomplete_cards.append(line_number)
 
-os.system('clear')
+clear_screen()
 print("Welcome to Flashcard")
 print("Type 'help' for a list of commands")
 #print("")
@@ -135,9 +139,9 @@ while len(incomplete_cards) > 0:
     print(card_number)
 
     #The following if statement will output the full card to a file called "outputfile" if the -o flag was given. This allows a second person to follow along who can see the full contents of the flashcard while the primary user only sees one side of it
-    if outputfile == True:
-        command = 'echo ' + current_line.front + " - " + current_line.back + " >> outputfile"
-        os.system(command)
+#    if outputfile == True:
+#        command = 'echo ' + current_line.front + " - " + current_line.back + " >> outputfile"
+#        os.system(command)
 
     print("")
     print("Front:")
@@ -145,7 +149,7 @@ while len(incomplete_cards) > 0:
     print("")
     input_parse(0)
 
-    os.system('clear')
+    clear_screen()
     
     print("")
     print("Front:")
@@ -157,7 +161,7 @@ while len(incomplete_cards) > 0:
 
     input_parse(1)
     
-    os.system('clear')
+    clear_screen()
 
 print("All Flashcards Complete!")
 print("Saving Card Completetion Status")
