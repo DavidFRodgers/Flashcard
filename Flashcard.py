@@ -73,6 +73,15 @@ def input_parse(status):
                 print("")
                 save_file(args.InputFile, data)
             case "exit:0" | "exit:1":
+                print("")
+                print("Saving Card Completion Status")
+                print("")
+                save_file(args.InputFile, data)
+                exit()
+            case "exit!:0" | "exit!:1":
+                print("")
+                print("Exiting without saving card completion status")
+                print("")
                 exit()
             case "stats:0" | "stats:1":
                 print(str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
@@ -81,7 +90,8 @@ def input_parse(status):
                 print("Available Commands:")
                 print("     help: See this help")
                 print("     save: Save card completion status to file")
-                print("     exit: Exit the program")
+                print("     exit: Save and Exit program")
+                print("     exit!: Exit without saving")
                 print("     stats: View how many cards are complete")
                 print("")
             case ":0":
@@ -144,7 +154,6 @@ print("Type 'help' for a list of commands")
 while len(incomplete_cards) > 0:
     card_number = random.randrange(0,len(incomplete_cards))
     current_line = data[incomplete_cards[card_number]]
-    print(card_number)
 
     #The following if statement will output the full card to a file called "outputfile" if the -o flag was given. This allows a second person to follow along who can see the full contents of the flashcard while the primary user only sees one side of it
 #    if outputfile == True:
