@@ -112,7 +112,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("InputFile")
 parser.add_argument("-o", action='store_true', help="create file that shows full cards")
 parser.add_argument("-r", action='store_true', help="reverse flashcards (non functioning)")
-parser.add_argument("--clear", action='store_true', help="set all flashcards as unfinished")
+parser.add_argument("--clear", action='store_true', help="set all flashcards as unfinished and exit")
+parser.add_argument("--stats", action='store_true', help="show file completion statistics and exit")
 args = parser.parse_args() 
 
 
@@ -136,13 +137,16 @@ if args.clear == True:
 #Make a list of cards. This list will be a list of line numbers
 #indicating flash cards which have yet to be solved
 
-
-
 incomplete_cards = []
 
 for line_number, line in enumerate(data):
     if line.complete == False:
         incomplete_cards.append(line_number)
+
+if args.stats == True:
+    print(args.InputFile + ": " +str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
+    exit(0)
+
 
 clear_screen()
 print("Welcome to Flashcard")
@@ -152,7 +156,11 @@ print("Type 'help' for a list of commands")
 #Main program loop
 
 while len(incomplete_cards) > 0:
+    #card_number = random.SystemRandom().randint(0,len(incomplete_cards))
     card_number = random.randrange(0,len(incomplete_cards))
+    print(str(card_number) + "/" + str(len(incomplete_cards)))
+    print(str(incomplete_cards[card_number]) + "/" + str(len(data)))
+
     current_line = data[incomplete_cards[card_number]]
 
     #The following if statement will output the full card to a file called "outputfile" if the -o flag was given. This allows a second person to follow along who can see the full contents of the flashcard while the primary user only sees one side of it
