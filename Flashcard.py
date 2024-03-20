@@ -84,7 +84,7 @@ def input_parse(status):
                 print("")
                 exit()
             case "stats:0" | "stats:1":
-                print(str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
+                print(show_stats())
             case "help:0" | "help:1":
                 print("")
                 print("Available Commands:")
@@ -105,7 +105,8 @@ def clear_screen():
     elif os.name == "nt":
         os.system('cls')
 
-
+def show_stats():
+    return(str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
 
 #Parse commandline arguements using argparse
 parser = argparse.ArgumentParser()
@@ -144,7 +145,7 @@ for line_number, line in enumerate(data):
         incomplete_cards.append(line_number)
 
 if args.stats == True:
-    print(args.InputFile + ": " +str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
+    print(args.InputFile + ": " + show_stats())
     exit(0)
 
 
