@@ -106,7 +106,7 @@ def clear_screen():
         os.system('cls')
 
 def show_stats():
-    return(str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards complete")
+    return("Complete: " + str(len(data) - len(incomplete_cards)) + "/" + str(len(data)) + " cards")
 
 #Parse commandline arguements using argparse
 parser = argparse.ArgumentParser()
@@ -162,7 +162,7 @@ while len(incomplete_cards) > 0:
     #print(str(card_number) + "/" + str(len(incomplete_cards)))
     #print(str(incomplete_cards[card_number]) + "/" + str(len(data)))
     
-    print("Complete: " + show_stats())
+    print(show_stats())
 
     current_line = data[incomplete_cards[card_number]]
 
