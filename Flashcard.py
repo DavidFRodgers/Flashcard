@@ -159,8 +159,10 @@ print("Type 'help' for a list of commands")
 while len(incomplete_cards) > 0:
     #card_number = random.SystemRandom().randint(0,len(incomplete_cards))
     card_number = random.randrange(0,len(incomplete_cards))
-    print(str(card_number) + "/" + str(len(incomplete_cards)))
-    print(str(incomplete_cards[card_number]) + "/" + str(len(data)))
+    #print(str(card_number) + "/" + str(len(incomplete_cards)))
+    #print(str(incomplete_cards[card_number]) + "/" + str(len(data)))
+    
+    print("Complete: " + show_stats())
 
     current_line = data[incomplete_cards[card_number]]
 
