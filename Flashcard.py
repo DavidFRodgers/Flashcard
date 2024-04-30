@@ -93,6 +93,12 @@ def input_parse(status):
                 print("     exit: Save and Exit program")
                 print("     exit!: Exit without saving")
                 print("     stats: View how many cards are complete")
+                print("     incomplete: view cards not yet completed")
+                print("")
+            case "incomplete:0" | "incomplete:1":
+                print("")
+                for x in incomplete_cards:
+                    print(data[x].front + "$$$" + data[x].back)
                 print("")
             case ":0":
                 ctrl_bool = True
