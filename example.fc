@@ -1,5 +1,5 @@
-command - ls $$$ list directory contents
-command - cp $$$ copy files and directories
-command - mv $$$ move (rename) files
-command - pwd $$$ print name of current/working directory
-command - cd $$$ change the shell working directory
+command - ls $$$ list directory contents:::0
+command - cp $$$ copy files and directories:::0
+command - mv $$$ move (rename) files:::0
+command - pwd $$$ print name of current/working directory:::0
+command - cd $$$ change the shell working directory:::0
