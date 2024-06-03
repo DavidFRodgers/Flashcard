@@ -2,7 +2,7 @@
 
 Flashcard is a simple program that allows the user to review flashcards they have created. 
 
-##How to use Flashcard
+## How to use Flashcard
 ### Create a Flashcard file
 
 A flashcard file is a plain text file with some simple syntax. Each line is a new flashcard entry and looks like this:
